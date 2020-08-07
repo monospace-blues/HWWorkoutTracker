@@ -7,6 +7,9 @@ const path = require("path");
 // PORT
 const PORT = process.env.PORT || 3000;
 
+// If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/workout"
+
 // Express
 const app = express();
 
@@ -17,7 +20,7 @@ app.use(express.json());
 
 app.use(express.static(path.join(__dirname, "/public")));
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { useNewUrlParser: true, useFindAndModify: false });
+mongoose.connect(MONGODB_URI);
 
 app.use(require("./routes/api-routes.js"));
 app.use(require("./routes/html-routes.js"));
